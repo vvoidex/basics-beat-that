@@ -30,11 +30,11 @@ let calculateWinner = function () {
   addNumber4 = Number(addNumber4);
 
   if ((addNumber1 > addNumber3) || (addNumber1 > addNumber4) || (addNumber2 > addNumber3) || (addNumber2 > addNumber4)) {
-    myOutputValue = '<br>' + 'Player 1 wins!' + '<br>' + 'Please refresh this page to start another match.'
+    myOutputValue = 'Player 1 wins!' + '<br>' + 'Please refresh this page to start another match.'
   } else if ((addNumber1 === addNumber3) || (addNumber1 === addNumber4) || (addNumber2 === addNumber3) || (addNumber2 === addNumber4)) {
-    myOutputValue = '<br>' + 'Both players tie!' + '<br>' + 'Please refresh this page to start another match.'
+    myOutputValue = 'Both players tie!' + '<br>' + 'Please refresh this page to start another match.'
   } else if ((addNumber1 < addNumber3) || (addNumber1 < addNumber4) || (addNumber2 < addNumber3) || (addNumber2 < addNumber4)) {
-    myOutputValue = '<br>' + 'Player 2 wins!' + '<br>' + 'Please refresh this page to start another match.'
+    myOutputValue = 'Player 2 wins!' + '<br>' + 'Please refresh this page to start another match.'
   }
   console.log(addNumber1);
   console.log(addNumber2);
@@ -43,13 +43,13 @@ let calculateWinner = function () {
   return myOutputValue;
 }
 let main = function (input) {
-  let myOutputValue = 'error'
+  let myOutputValue = ''
 
   dice1.push(diceRoll());
   dice2.push(diceRoll());
 
   if (firstPlayer === true) {
-    myOutputValue = 'Welcome Player 1.' + '<br>' + `You rolled ${dice1[0]} for Dice 1 and ${dice2[0]} for Dice 2.` + '<br>' + 'Choose either Dice 1 or Dice 2 for your starting number by typing either 1 or 2.';
+    myOutputValue = 'Welcome Player 1.' + '<br>' + `You rolled ${dice1[0]} for Dice 1 and ${dice2[0]} for Dice 2.` + '<br>' + 'Choose the order of the dice.';
     if (input === String(1)) {
       let addNumber1 = String(dice1[0]) + Number(dice2[0]);
       myOutputValue = 'Player 1, you chose Dice 1 first.' + '<br>' + `Your number is ${addNumber1}.` + '<br>' + "It is now Player 2's turn.";
@@ -64,22 +64,32 @@ let main = function (input) {
       secondPlayer = true;
       addNumber2 = Number(addNumber2);
       console.log(addNumber2);
+    } else {
+      myOutputValue = myOutputValue + '<br>' + 'Please enter either 1 or 2.'
     }
   } else if (secondPlayer === true) {
     myOutputValue = 'Welcome Player 2.' + '<br>' + `You rolled ${dice1[1]} for Dice 1 and ${dice2[1]} for Dice 2.` + '<br>' + 'Choose the order of the dice.';
     if (input === String(1)) {
       let addNumber3 = String(dice1[1]) + Number(dice2[1]);
-      myOutputValue = 'Player 2, you chose Dice 1 first.' + '<br>' + `Your number is ${addNumber3}.`
+      myOutputValue = 'Player 2, you chose Dice 1 first.' + '<br>' + `Your number is ${addNumber3}.` + '<br>'
       addNumber3 = Number(addNumber3);
       console.log(addNumber3);
-      myOutputValue = myOutputValue + calculateWinner();
+      firstPlayer = false;
+      secondPlayer = false;
     } else if (input === String(2)) {
       let addNumber4 = String(dice2[1]) + Number(dice1[1]);
-      myOutputValue = 'Player 2, you chose Dice 2 first.' + '<br>' + `Your number is ${addNumber4}.`
+      myOutputValue = 'Player 2, you chose Dice 2 first.' + '<br>' + `Your number is ${addNumber4}.` + '<br>'
       addNumber4 = Number(addNumber4);
       console.log(addNumber4);
-      myOutputValue = myOutputValue + calculateWinner();
+      firstPlayer = false;
+      secondPlayer = false;
+    } else {
+      myOutputValue = myOutputValue + '<br>' + 'Please enter either 1 or 2.'
     }
+  }
+
+  if (firstPlayer === false && secondPlayer === false) {
+    myOutputValue = myOutputValue + calculateWinner();
   }
   return myOutputValue;
 }
